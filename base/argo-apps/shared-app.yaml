@@ -16,9 +16,9 @@ spec:
       - PrunePropagationPolicy=foreground
 
   source: 
-    repoURL: https://github.com/Jojoooo1/argo-deploy-applications-infra.git
+    repoURL: https://github.com/Jojoooo1/argo-deploy-applications-infra-gke.git
     targetRevision: main
-    path: overlays/local/applications/shared
+    path: overlays/test/applications/shared
 
   destination:
     server: "https://kubernetes.default.svc"
