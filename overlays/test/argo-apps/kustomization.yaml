@@ -11,6 +11,7 @@ resources:
   - ../../../base/argo-apps/ingress-nginx-helm.yaml
   - ../../../base/argo-apps/keycloak-helm.yaml
   - ../../../base/argo-apps/rabbitmq-helm.yaml
+  - ../../../base/argo-apps/shared-app.yaml
 
 patches:
   - target:
