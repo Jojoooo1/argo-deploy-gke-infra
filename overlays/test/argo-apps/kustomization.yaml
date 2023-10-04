@@ -24,7 +24,7 @@ patches:
         path: "/spec/source/helm/parameters/-"
         value: {
           name: 'controller.service.loadBalancerIP',
-        value: '34.138.11.37'
+        value: '34.138.39.227'
 
 #       }
 #   - target:
