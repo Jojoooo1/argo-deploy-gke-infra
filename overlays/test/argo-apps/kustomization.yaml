@@ -21,11 +21,8 @@ patches:
       namespace: argocd
     patch: |-
       - op: add
-        path: "/spec/source/helm/parameters/-"
-        value: {
-          name: 'controller.service.loadBalancerIP',
-          value: '34.138.39.227'
-        }
+        path: "/spec/source/helm/valuesObject/controller/service/loadBalancerIP"
+        value: 34.138.39.227
 
 #   - target:
 #       group: argoproj.io
