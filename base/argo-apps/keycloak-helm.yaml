@@ -18,19 +18,19 @@ spec:
   source:
     chart: keycloak
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 16.1.7
+    targetRevision: 17.0.0
 
     # https://github.com/bitnami/charts/tree/main/bitnami/keycloak
     helm:
       valuesObject:
         ## Resources ##
-        resources:
-          requests:
-            cpu: 512m
-            memory: 3Gi
-          limits:
-            # cpu: without limit
-            memory: 3Gi
+        # resources:
+        #   requests:
+        #     cpu: 512m
+        #     memory: 3Gi
+        #   limits:
+        #     # cpu: without limit
+        #     memory: 3Gi
 
         ## Configuration ##
         extraEnvVars:
@@ -47,7 +47,7 @@ spec:
         autoscaling:
           enabled: true
           minReplicas: 1
-          maxReplicas: 2
+          maxReplicas: 1
           targetMemory: "85"
         pdb:
           create: true

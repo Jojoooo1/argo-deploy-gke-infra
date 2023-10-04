@@ -35,19 +35,19 @@ spec:
             externalTrafficPolicy: Local
 
           ## Resources ##
-          resources:
-            requests:
-              cpu: 300m
-              memory: 400Mi
-            limits:
-              # cpu: without limit
-              memory: 400Mi
+          # resources:
+          #   requests:
+          #     cpu: 300m
+          #     memory: 400Mi
+          #   limits:
+          #     # cpu: without limit
+          #     memory: 400Mi
 
           ## Replica ##
           autoscaling:
             enabled: true
-            minReplicas: 2
-            maxReplicas: 6
+            minReplicas: 1
+            maxReplicas: 1
             targetCPUUtilizationPercentage: 80
             targetMemoryUtilizationPercentage: 80
           

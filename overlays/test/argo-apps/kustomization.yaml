@@ -12,19 +12,20 @@ resources:
   - ../../../base/argo-apps/keycloak-helm.yaml
   - ../../../base/argo-apps/rabbitmq-helm.yaml
 
-# patches:
-# - target:
-#     group: argoproj.io
-#     version: v1alpha1
-#     kind: Application
-#     name: ingress-nginx
-#     namespace: argocd
-#   patch: |-
-#     - op: add
-#       path: "/spec/source/helm/parameters/-"
-#       value: {
-#         name: 'controller.service.loadBalancerIP',
-#         value: '34.138.11.37'
+patches:
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+      name: ingress-nginx
+      namespace: argocd
+    patch: |-
+      - op: add
+        path: "/spec/source/helm/parameters/-"
+        value: {
+          name: 'controller.service.loadBalancerIP',
+        value: '34.138.11.37'
+
 #       }
 #   - target:
 #       group: argoproj.io

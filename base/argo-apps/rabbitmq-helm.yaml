@@ -24,12 +24,12 @@ spec:
     helm:
       valuesObject:
 
-        resources:
-          requests: 
-            memory: 1Gi
-            cpu: 650m
-          limits:
-            memory: 1Gi
+        # resources:
+        #   requests: 
+        #     memory: 1Gi
+        #     cpu: 650m
+        #   limits:
+        #     memory: 1Gi
 
         replicaCount: 3
         pdb:
@@ -40,7 +40,7 @@ spec:
           rebalance: "true"
 
         persistence:
-          # storageClass: 
+          # storageClass: standard-rwo # SSD
           size: 10Gi
         
         auth:

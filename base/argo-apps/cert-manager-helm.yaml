@@ -28,13 +28,13 @@ spec:
     helm:
       valuesObject:
         installCRDs: true
-        resources:
-          requests:
-            cpu: 75m
-            memory: 200Mi
-          limits:
-            cpu: 75m
-            memory: 200Mi
+        # resources:
+        #   requests:
+        #     cpu: 75m
+        #     memory: 200Mi
+        #   limits:
+        #     cpu: 75m
+        #     memory: 200Mi
         prometheus:
           servicemonitor:
             enabled: true

@@ -70,13 +70,13 @@ spec:
 
         ## Controller ##
         controller:
-          resources:
-            limits:
-              cpu: 1
-              memory: 1024Mi
-            requests:
-              cpu: 500m
-              memory: 1024Mi
+          # resources:
+          #   limits:
+          #     cpu: 1
+          #     memory: 1024Mi
+          #   requests:
+          #     cpu: 500m
+          #     memory: 1024Mi
           metrics:
             enabled: true
             serviceMonitor:
@@ -98,13 +98,13 @@ spec:
 
         ## RepoServer ##
         repoServer:
-          resources:
-            limits:
-              cpu: 500m
-              memory: 1.5Gi
-            requests:
-              cpu: 250m
-              memory: 512Mi
+          # resources:
+          #   limits:
+          #     cpu: 500m
+          #     memory: 1.5Gi
+          #   requests:
+          #     cpu: 250m
+          #     memory: 512Mi
 
           volumes:
             - name: custom-tools
@@ -158,13 +158,13 @@ spec:
 
         ## Server ##
         server:
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 400m
-              memory: 512Mi
+          # resources:
+          #   limits:
+          #     cpu: 400m
+          #     memory: 512Mi
+          #   requests:
+          #     cpu: 400m
+          #     memory: 512Mi
           metrics:
             enabled: true
             serviceMonitor:
@@ -180,13 +180,13 @@ spec:
 
         ## Redis ##
         redis:
-          resources:
-            limits:
-              cpu: 120m
-              memory: 256Mi
-            requests:
-              cpu: 120m
-              memory: 256Mi
+          # resources:
+          #   limits:
+          #     cpu: 120m
+          #     memory: 256Mi
+          #   requests:
+          #     cpu: 120m
+          #     memory: 256Mi
           metrics:
             enabled: true
             serviceMonitor:
