@@ -4,9 +4,8 @@ metadata:
   name: letsencrypt-staging
 spec:
   acme:
-
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: <infra-team>@<your-company>.com
+    email: platform@cloud-diplomate.com
     privateKeySecretRef:
       name: letsencrypt-staging
 
