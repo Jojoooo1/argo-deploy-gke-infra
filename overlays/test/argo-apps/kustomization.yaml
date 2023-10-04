@@ -24,9 +24,9 @@ patches:
         path: "/spec/source/helm/parameters/-"
         value: {
           name: 'controller.service.loadBalancerIP',
-        value: '34.138.39.227'
+          value: '34.138.39.227'
+        }
 
-#       }
 #   - target:
 #       group: argoproj.io
 #       version: v1alpha1
