@@ -31,7 +31,7 @@ spec:
         #   limits:
         #     memory: 1Gi
 
-        replicaCount: 3
+        replicaCount: 1 # 3
         pdb:
           create: "true"
           minAvailable: 1
