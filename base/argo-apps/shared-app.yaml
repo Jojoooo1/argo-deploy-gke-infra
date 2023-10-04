@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dbeaver
+  name: shared-app
   namespace: argocd
 
   # Add this finalizer ONLY if you want these to cascade delete (A cascade delete, deletes both the app and its resources, rather than only the app.)
@@ -22,4 +22,4 @@ spec:
 
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: dbeaver
+    namespace: default
