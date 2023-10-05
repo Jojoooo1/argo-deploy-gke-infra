@@ -187,6 +187,42 @@ spec:
                 prometheus.io/scrap-with: kube-prometheus-stack
               namespace: argocd
 
+        # GKE Ingress
+        # service:
+        #   annotations:
+        #     cloud.google.com/neg: '{"ingress": true}'
+        #     cloud.google.com/backend-config: '{"default": "argocd-server"}'
+        # ingress:
+        #   enabled: true
+        #   hosts:
+        #     - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com.br
+        #   annotations:
+        #     kubernetes.io/ingress.class: "gce"
+        #     kubernetes.io/ingress.global-static-ip-name: lb-global-cl-dpl-argo
+        #     networking.gke.io/v1beta1.FrontendConfig: "argocd-server"
+        #     networking.gke.io/managed-certificates: argocd-server
+
+        # GKEbackendConfig:
+        #   enabled: true
+        #   spec:
+        #     iap:
+        #       enabled: true
+        #       oauthclientCredentials:
+        #         secretName: oauth-internal-creds-secrets
+
+        # GKEmanagedCertificate:
+        #   enabled: true
+        #   domains:
+        #     - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com.br
+
+        # GKEfrontendConfig:
+        #   enabled: true
+        #   spec:
+        #     redirectToHttps:
+        #       enabled: true
+        #       responseCodeName: PERMANENT_REDIRECT
+
+
   destination:
     server: "https://kubernetes.default.svc"
     namespace: argocd
