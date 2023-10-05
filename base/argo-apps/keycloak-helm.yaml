@@ -45,9 +45,9 @@ spec:
 
         ## Replica ##
         autoscaling:
-          enabled: true
+          enabled: false # true
           minReplicas: 1
-          maxReplicas: 1
+          maxReplicas: 3
           targetMemory: "85"
         pdb:
           create: true
