@@ -39,9 +39,6 @@ spec:
             exec.enabled: "true"
             kustomize.buildOptions: "--load-restrictor LoadRestrictionsNone"
 
-            # DO NOT USE in production, this is only used to improve reconciliation in testing env.
-            timeout.reconciliation: "10s"
-
             # dex.config: |
             #   connectors:
             #     - id: google
@@ -80,7 +77,7 @@ spec:
           metrics:
             enabled: true
             serviceMonitor:
-              enabled: true
+              enabled: false # true
               namespace: argocd
               additionalLabels:
                 prometheus.io/scrap-with: kube-prometheus-stack
@@ -91,7 +88,7 @@ spec:
           metrics:
             enabled: true
             serviceMonitor:
-              enabled: true
+              enabled: false # true
               namespace: argocd
               additionalLabels:
                 prometheus.io/scrap-with: kube-prometheus-stack
@@ -126,7 +123,7 @@ spec:
           extraContainers:        
             - name: envsubst
               command: [/var/run/argocd/argocd-cmp-server]
-              image: quay.io/argoproj/argocd:v2.8.0
+              image: quay.io/argoproj/argocd:v2.8.4
               securityContext:
                 runAsNonRoot: true
                 runAsUser: 999
@@ -151,7 +148,7 @@ spec:
           metrics:
             enabled: true
             serviceMonitor:
-              enabled: true
+              enabled: false # true
               namespace: argocd
               additionalLabels:
                 prometheus.io/scrap-with: kube-prometheus-stack
@@ -168,15 +165,10 @@ spec:
           metrics:
             enabled: true
             serviceMonitor:
-              enabled: true
+              enabled: false # true
               additionalLabels:
                 prometheus.io/scrap-with: kube-prometheus-stack
               namespace: argocd
-          ingress:
-            enabled: true
-            ingressClassName: "nginx"
-            hosts:
-              - argo.local.com.br
 
         ## Redis ##
         redis:
@@ -190,7 +182,7 @@ spec:
           metrics:
             enabled: true
             serviceMonitor:
-              enabled: true
+              enabled: false # true
               additionalLabels:
                 prometheus.io/scrap-with: kube-prometheus-stack
               namespace: argocd
