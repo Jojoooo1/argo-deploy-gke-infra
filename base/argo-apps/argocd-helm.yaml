@@ -225,6 +225,25 @@ spec:
                 enabled: true
                 responseCodeName: PERMANENT_REDIRECT
 
+        extraObjects:
+          - |
+            apiVersion: external-secrets.io/v1beta1
+            kind: ExternalSecret
+            metadata:
+              name: oauth-internal-creds-secrets
+              namespace: argocd
+            spec:
+              refreshInterval: 1h
+              secretStoreRef:
+                kind: ClusterSecretStore
+                name: gcp-secret-manager
+              target:
+                name: oauth-internal-creds-secrets
+                creationPolicy: Owner
+              dataFrom:
+                - extract:
+                    key: oauth-internal-creds-secrets
+
 
   destination:
     server: "https://kubernetes.default.svc"
