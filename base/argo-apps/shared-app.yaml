@@ -22,7 +22,7 @@ spec:
   source: 
     repoURL: https://github.com/Jojoooo1/argo-deploy-applications-infra-gke.git
     targetRevision: main
-    path: overlays/test/applications/shared
+    path: overlays/test/shared-app
 
   destination:
     server: "https://kubernetes.default.svc"
