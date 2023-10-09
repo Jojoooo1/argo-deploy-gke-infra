@@ -23,7 +23,7 @@ patches:
     patch: |-
       - op: add
         path: "/spec/source/helm/valuesObject/controller/service/loadBalancerIP"
-        value: 35.237.125.231
+        value: 35.190.186.130
 
 #   - target:
 #       group: argoproj.io
