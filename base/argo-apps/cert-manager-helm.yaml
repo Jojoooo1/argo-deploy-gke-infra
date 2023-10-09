@@ -27,6 +27,7 @@ spec:
     # https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager
     helm:
       valuesObject:
+        fullnameOverride: cert-manager
         installCRDs: true
         # resources:
         #   requests:

@@ -23,6 +23,7 @@ spec:
     # https://github.com/bitnami/charts/tree/main/bitnami/keycloak
     helm:
       valuesObject:
+        fullnameOverride: keycloak
         ## Resources ##
         # resources:
         #   requests:

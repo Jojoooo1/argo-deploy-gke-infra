@@ -43,7 +43,7 @@ spec:
       # https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq
       helm:
         valuesObject:
-
+          fullnameOverride: rabbitmq
           # resources:
           #   requests: 
           #     memory: 1Gi
