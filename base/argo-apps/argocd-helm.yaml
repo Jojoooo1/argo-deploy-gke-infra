@@ -191,58 +191,59 @@ spec:
 
 
           # GKE Ingress
-          service:
-            annotations:
-              cloud.google.com/neg: '{"ingress": true}'
-              cloud.google.com/backend-config: '{"default": "argocd-server"}'
-          ingress:
-            enabled: true
-            hosts:
-              - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
-            annotations:
-              kubernetes.io/ingress.class: "gce"
-              kubernetes.io/ingress.global-static-ip-name: cl-dpl-service-test-rap0-k8s-test-ingress-argo
-              networking.gke.io/v1beta1.FrontendConfig: "argocd-server"
-              networking.gke.io/managed-certificates: argocd-server
+        #   service:
+        #     annotations:
+        #       cloud.google.com/neg: '{"ingress": true}'
+        #       cloud.google.com/backend-config: '{"default": "argocd-server"}'
+          
+        #   ingress:
+        #     enabled: true
+        #     hosts:
+        #       - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
+        #     annotations:
+        #       kubernetes.io/ingress.class: "gce"
+        #       kubernetes.io/ingress.global-static-ip-name: cl-dpl-service-test-rap0-k8s-test-ingress-argo
+        #       networking.gke.io/v1beta1.FrontendConfig: "argocd-server"
+        #       networking.gke.io/managed-certificates: argocd-server
 
-          GKEbackendConfig:
-            enabled: true
-            spec:
-              iap:
-                enabled: true
-                oauthclientCredentials:
-                  secretName: oauth-internal-creds-secrets
+        #   GKEbackendConfig:
+        #     enabled: true
+        #     spec:
+        #       iap:
+        #         enabled: true
+        #         oauthclientCredentials:
+        #           secretName: oauth-internal-creds-secrets
 
-          GKEmanagedCertificate:
-            enabled: true
-            domains:
-              - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
+        #   GKEmanagedCertificate:
+        #     enabled: true
+        #     domains:
+        #       - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
 
-          GKEfrontendConfig:
-            enabled: true
-            spec:
-              redirectToHttps:
-                enabled: true
-                responseCodeName: PERMANENT_REDIRECT
+        #   GKEfrontendConfig:
+        #     enabled: true
+        #     spec:
+        #       redirectToHttps:
+        #         enabled: true
+        #         responseCodeName: PERMANENT_REDIRECT
 
-        extraObjects:
-          - |
-            apiVersion: external-secrets.io/v1beta1
-            kind: ExternalSecret
-            metadata:
-              name: oauth-internal-creds-secrets
-              namespace: argocd
-            spec:
-              refreshInterval: 1h
-              secretStoreRef:
-                kind: ClusterSecretStore
-                name: gcp-secret-manager
-              target:
-                name: oauth-internal-creds-secrets
-                creationPolicy: Owner
-              dataFrom:
-                - extract:
-                    key: oauth-internal-creds-secrets
+        # extraObjects:
+        #   - |
+        #     apiVersion: external-secrets.io/v1beta1
+        #     kind: ExternalSecret
+        #     metadata:
+        #       name: oauth-internal-creds-secrets
+        #       namespace: argocd
+        #     spec:
+        #       refreshInterval: 1h
+        #       secretStoreRef:
+        #         kind: ClusterSecretStore
+        #         name: gcp-secret-manager
+        #       target:
+        #         name: oauth-internal-creds-secrets
+        #         creationPolicy: Owner
+        #       dataFrom:
+        #         - extract:
+        #             key: oauth-internal-creds-secrets
 
 
   destination:
