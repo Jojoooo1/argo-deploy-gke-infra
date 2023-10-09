@@ -211,7 +211,7 @@ spec:
               iap:
                 enabled: true
                 oauthclientCredentials:
-                  secretName: oauth-internal-creds
+                  secretName: oauth-internal-creds-secrets
 
           GKEmanagedCertificate:
             enabled: true
