@@ -22,19 +22,19 @@ spec:
       plugin:
         name: envsubst
         env:
-          - name: ARGOCD_ENV_INGRESS_IP_NAME
+          - name: INGRESS_IP_NAME
             value: "cl-dpl-service-test-rap0-k8s-test-ingress-rabbitmq"
 
-          - name: ARGOCD_ENV_INGRESS_NAME
+          - name: INGRESS_NAME
             value: "rabbitmq-ingress"
 
-          - name: ARGOCD_ENV_INGRESS_NAMESPACE
+          - name: INGRESS_NAMESPACE
             value: "rabbitmq"
 
-          - name: ARGOCD_ENV_INGRESS_DNS
+          - name: INGRESS_DNS
             value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomate.com"
 
-          - name: ARGOCD_ENV_SERVICE_NAME
+          - name: SERVICE_NAME
             value: "rabbitmq-headless"
 
     - chart: rabbitmq
