@@ -15,6 +15,10 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 
+    automated:
+      prune: true
+      selfHeal: true
+
   source: 
     repoURL: https://github.com/Jojoooo1/argo-deploy-applications-infra-gke.git
     targetRevision: main
