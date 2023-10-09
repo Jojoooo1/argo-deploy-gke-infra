@@ -18,6 +18,7 @@ spec:
   sources:
     - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap.git
       targetRevision: main
+      path: ./
       plugin:
         name: envsubst
         env:
