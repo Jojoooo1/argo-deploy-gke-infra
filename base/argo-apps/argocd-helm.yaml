@@ -154,23 +154,6 @@ spec:
               additionalLabels:
                 prometheus.io/scrap-with: kube-prometheus-stack
 
-        ## Server ##
-        server:
-          # resources:
-          #   limits:
-          #     cpu: 400m
-          #     memory: 512Mi
-          #   requests:
-          #     cpu: 400m
-          #     memory: 512Mi
-          metrics:
-            enabled: true
-            serviceMonitor:
-              enabled: false # true
-              additionalLabels:
-                prometheus.io/scrap-with: kube-prometheus-stack
-              namespace: argocd
-
         ## Redis ##
         redis:
           # resources:
@@ -188,40 +171,59 @@ spec:
                 prometheus.io/scrap-with: kube-prometheus-stack
               namespace: argocd
 
-        # GKE Ingress
-        service:
-          annotations:
-            cloud.google.com/neg: '{"ingress": true}'
-            cloud.google.com/backend-config: '{"default": "argocd-server"}'
-        ingress:
-          enabled: true
-          hosts:
-            - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
-          annotations:
-            kubernetes.io/ingress.class: "gce"
-            kubernetes.io/ingress.global-static-ip-name: cl-dpl-service-test-rap0-k8s-test-ingress-argo
-            networking.gke.io/v1beta1.FrontendConfig: "argocd-server"
-            networking.gke.io/managed-certificates: argocd-server
+        ## Server ##
+        server:
+          # resources:
+          #   limits:
+          #     cpu: 400m
+          #     memory: 512Mi
+          #   requests:
+          #     cpu: 400m
+          #     memory: 512Mi
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              additionalLabels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+              namespace: argocd
 
-        GKEbackendConfig:
-          enabled: true
-          spec:
-            iap:
-              enabled: true
-              oauthclientCredentials:
-                secretName: oauth-internal-creds
 
-        GKEmanagedCertificate:
-          enabled: true
-          domains:
-            - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
 
-        GKEfrontendConfig:
-          enabled: true
-          spec:
-            redirectToHttps:
-              enabled: true
-              responseCodeName: PERMANENT_REDIRECT
+          # GKE Ingress
+          service:
+            annotations:
+              cloud.google.com/neg: '{"ingress": true}'
+              cloud.google.com/backend-config: '{"default": "argocd-server"}'
+          ingress:
+            enabled: true
+            hosts:
+              - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
+            annotations:
+              kubernetes.io/ingress.class: "gce"
+              kubernetes.io/ingress.global-static-ip-name: cl-dpl-service-test-rap0-k8s-test-ingress-argo
+              networking.gke.io/v1beta1.FrontendConfig: "argocd-server"
+              networking.gke.io/managed-certificates: argocd-server
+
+          GKEbackendConfig:
+            enabled: true
+            spec:
+              iap:
+                enabled: true
+                oauthclientCredentials:
+                  secretName: oauth-internal-creds-secrets
+
+          GKEmanagedCertificate:
+            enabled: true
+            domains:
+              - argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
+
+          GKEfrontendConfig:
+            enabled: true
+            spec:
+              redirectToHttps:
+                enabled: true
+                responseCodeName: PERMANENT_REDIRECT
 
 
   destination:
