@@ -22,14 +22,14 @@ spec:
       plugin:
         name: envsubst
         env:
-          - name: INGRESS_IP_NAME
-            value: "cl-dpl-service-test-rap0-k8s-test-ingress-rabbitmq"
-
           - name: INGRESS_NAME
             value: "rabbitmq"
 
           - name: INGRESS_NAMESPACE
             value: "rabbitmq"
+
+          - name: INGRESS_IP_NAME
+            value: "cl-dpl-service-test-rap0-k8s-test-ingress-rabbitmq"
 
           - name: INGRESS_DNS
             value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomate.com"
@@ -85,12 +85,13 @@ spec:
           service: 
             headless:
               annotations:
-
+                cloud.google.com/neg: '{"ingress": true}'
+                cloud.google.com/backend-config: backend-config-rabbitmq
 
           metrics:
             enabled: true
             serviceMonitor:
-              enabled: true
+              enabled: false # true
               namespace: rabbitmq
               labels:
                 prometheus.io/scrap-with: kube-prometheus-stack
