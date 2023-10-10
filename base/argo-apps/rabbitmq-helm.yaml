@@ -96,7 +96,7 @@ spec:
               labels:
                 prometheus.io/scrap-with: kube-prometheus-stack
             prometheusRule:
-              enabled: "true"
+              enabled: false # true
               namespace: rabbitmq
               labels:
                 prometheus.io/scrap-with: kube-prometheus-stack
