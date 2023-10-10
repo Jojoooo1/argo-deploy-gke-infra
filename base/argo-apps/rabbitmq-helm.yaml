@@ -37,9 +37,12 @@ spec:
           - name: SERVICE_NAME
             value: "rabbitmq-headless"
 
+          - name: SERVICE_PORT
+            value: "15672"
+
     - chart: rabbitmq
       repoURL: https://charts.bitnami.com/bitnami
-      targetRevision: 12.2.0
+      targetRevision: 12.2.1
 
       # https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq
       helm:
@@ -78,6 +81,11 @@ spec:
             # Warning: recommended th at the RabbitMQ node is allocated AT LEAST 3 times the memory of the default WAL file size limit.
             raft.wal_max_size_bytes = 64000000 # Flush current WAL file to a segment file on disk once it reaches 64 MiB in size
             load_definitions = /app/load_definition.json
+          
+          service: 
+            headless:
+              annotations:
+
 
           metrics:
             enabled: true
