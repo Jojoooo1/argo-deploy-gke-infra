@@ -16,7 +16,7 @@ spec:
       - PrunePropagationPolicy=foreground
 
   sources:
-    - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap-with-external-dns.git
+    - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap.git
       targetRevision: main
       path: ./
       plugin:
