@@ -15,9 +15,9 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 
-    automated:
-      prune: false
-      selfHeal: false
+    # automated:
+    #   prune: true
+    #   selfHeal: true
       
   sources:
     - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap.git
