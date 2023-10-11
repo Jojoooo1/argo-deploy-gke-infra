@@ -7,6 +7,7 @@ resources:
   - ../../../base/argo-apps/argocd-helm.yaml
   - ../../../base/argo-apps/argocd-image-updater-helm.yaml
   - ../../../base/argo-apps/cert-manager-helm.yaml
+  - ../../../base/argo-apps/external-dns-helm.yaml
   - ../../../base/argo-apps/external-secrets-helm.yaml
   - ../../../base/argo-apps/ingress-nginx-helm.yaml
   - ../../../base/argo-apps/keycloak-helm.yaml

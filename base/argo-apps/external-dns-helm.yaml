@@ -28,6 +28,8 @@ spec:
     helm:
       valuesObject:
         fullnameOverride: external-dns
+        provider: google
+        domainFilters: ["cloud-diplomate.com"]
         # resources:
         #   requests:
         #     cpu: 75m
@@ -45,6 +47,10 @@ spec:
 
         podDisruptionBudget:
           enabled: true
+        
+        serviceAccount:
+          annotations: 
+            iam.gke.io/gcp-service-account: external-dns@${ARGOCD_ENV_PROJECT}.iam.gserviceaccount.com
 
   destination:
     server: "https://kubernetes.default.svc"
