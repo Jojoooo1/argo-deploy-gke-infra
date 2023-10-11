@@ -30,7 +30,7 @@ spec:
         fullnameOverride: external-dns
         provider: google
         domainFilters: ["cloud-diplomate.com"]
-        extraArgs: --google-project=cl-dpl-commons-dns-az9l
+        extraArgs: ["--google-project=cl-dpl-commons-dns-az9l"]
         # resources:
         #   requests:
         #     cpu: 75m
