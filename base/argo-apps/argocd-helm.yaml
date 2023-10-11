@@ -204,6 +204,11 @@ spec:
             #   requests:
             #     cpu: 400m
             #     memory: 512Mi
+            # GKE Ingress
+            service:
+              annotations:
+                cloud.google.com/neg: '{"ingress": true}'
+                cloud.google.com/backend-config: '{"default": "argocd-server"}'
             metrics:
               enabled: true
               serviceMonitor:
