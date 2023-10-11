@@ -38,6 +38,9 @@ spec:
           - name: INGRESS_DNS
             value: "argo${ARGOCD_ENV_DNS}.cloud-diplomate.com"
 
+          - name: EXTERNAL_DNS_ANNOTATION
+            value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomate.com"
+
           - name: SERVICE_NAME
             value: "argocd-server"
 
@@ -204,6 +207,7 @@ spec:
             #   requests:
             #     cpu: 400m
             #     memory: 512Mi
+
             # GKE Ingress
             service:
               annotations:
