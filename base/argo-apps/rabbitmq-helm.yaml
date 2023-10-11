@@ -34,6 +34,9 @@ spec:
           - name: INGRESS_DNS
             value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomate.com"
 
+          - name: EXTERNAL_DNS_ANNOTATION
+            value: "external-dns.alpha.kubernetes.io/hostname: rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomate.com"
+
           - name: SERVICE_NAME
             value: "rabbitmq-headless"
 
