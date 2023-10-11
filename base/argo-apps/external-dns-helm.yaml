@@ -28,9 +28,16 @@ spec:
     helm:
       valuesObject:
         fullnameOverride: external-dns
+
         provider: google
         domainFilters: ["cloud-diplomate.com"]
         extraArgs: ["--google-project=cl-dpl-commons-dns-az9l"]
+
+        # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/registry/registry.md
+        txtOwnerId: "${ARGOCD_ENV_PROJECT}-k8s-test"
+
+        # txtPrefix: "external-dns-"
+
         # resources:
         #   requests:
         #     cpu: 75m
