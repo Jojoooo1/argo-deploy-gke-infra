@@ -32,15 +32,19 @@ spec:
         # resources:
         #   requests:
         #     cpu: 75m
-        #     memory: 200Mi
+        #     memory: 150Mi
         #   limits:
         #     cpu: 75m
-        #     memory: 200Mi
+        #     memory: 150Mi
+        podDisruptionBudget:
+          enabled: true
+
         prometheus:
           servicemonitor:
             enabled: false # true
             labels:
               prometheus.io/scrap-with: kube-prometheus-stack
+
         extraArgs:
           - --logging-format=json
         webhook:
@@ -50,8 +54,6 @@ spec:
           extraArgs:
             - --logging-format=json
 
-        podDisruptionBudget:
-          enabled: true
 
   destination:
     server: "https://kubernetes.default.svc"

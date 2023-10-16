@@ -28,7 +28,7 @@ spec:
     helm:
       valuesObject:
         fullnameOverride: external-dns
-
+        
         provider: google
         domainFilters: ["cloud-diplomate.com"]
         extraArgs: ["--google-project=cl-dpl-commons-dns-az9l"]
