@@ -49,7 +49,7 @@ spec:
   
     - chart: argo-cd
       repoURL: https://argoproj.github.io/argo-helm
-      targetRevision: 5.46.7
+      targetRevision: 5.49.0
 
       # https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
       helm:
