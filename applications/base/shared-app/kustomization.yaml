@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cluster-secret-store.yaml
   - letsencrypt-prod-nginx.yaml
+  - letsencrypt-staging-nginx.yaml
