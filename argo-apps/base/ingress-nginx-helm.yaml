@@ -30,8 +30,12 @@ spec:
         fullnameOverride: ingress-nginx
         controller:
           service:
-            # loadBalancerIP: '34.74.253.xx' # Set in overlay
-            externalTrafficPolicy: Local # allow to whitelist by IP
+            # loadBalancerIP: # Set in overlay
+            externalTrafficPolicy: Local # Used to allow whitelist by IP
+
+            # https://cloud.google.com/load-balancing/docs/passthrough-network-load-balancer#backend_service-based_load_balancers
+            # annotations:
+            #   cloud.google.com/l4-rbs: "enabled"
 
           ## Resources ##
           # resources:

@@ -36,10 +36,10 @@ spec:
             value: "cl-dpl-service-test-rap0-k8s-test-ingress-argo"
 
           - name: INGRESS_DNS
-            value: "argo${ARGOCD_ENV_DNS}.cloud-diplomate.com"
+            value: "argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
           - name: EXTERNAL_DNS_ANNOTATION
-            value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomate.com"
+            value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
           - name: SERVICE_NAME
             value: "argocd-server"
@@ -63,7 +63,7 @@ spec:
             secret:
               createSecret: false
             cm:
-              url:  argo${ARGOCD_ENV_DNS}.cloud-diplomate.com
+              url:  argo${ARGOCD_ENV_DNS}.cloud-diplomats.com
               exec.enabled: "true"
               kustomize.buildOptions: "--load-restrictor LoadRestrictionsNone"
 

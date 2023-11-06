@@ -1,11 +1,12 @@
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: letsencrypt-prod
+  namespace: default
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: platform@cloud-diplomate.com
+    email: platform@cloud-diplomats.com
     privateKeySecretRef:
       name: letsencrypt-prod
 

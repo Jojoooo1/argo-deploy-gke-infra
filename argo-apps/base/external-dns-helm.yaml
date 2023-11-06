@@ -30,7 +30,7 @@ spec:
         fullnameOverride: external-dns
         
         provider: google
-        domainFilters: ["cloud-diplomate.com"]
+        domainFilters: ["cloud-diplomats.com"]
         extraArgs: ["--google-project=cl-dpl-commons-dns-az9l"]
 
         # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/registry/registry.md

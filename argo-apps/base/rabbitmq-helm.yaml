@@ -32,10 +32,10 @@ spec:
             value: "cl-dpl-service-test-rap0-k8s-test-ingress-rabbitmq"
 
           - name: INGRESS_DNS
-            value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomate.com"
+            value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
           - name: EXTERNAL_DNS_ANNOTATION
-            value: "external-dns.alpha.kubernetes.io/hostname: rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomate.com"
+            value: "external-dns.alpha.kubernetes.io/hostname: rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
           - name: SERVICE_NAME
             value: "rabbitmq-headless"
