@@ -19,207 +19,180 @@ spec:
     #   prune: true
     #   selfHeal: true
       
-  sources:
-    - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap.git
-      targetRevision: main
-      path: ./
-      plugin:
-        name: envsubst
-        env:
-          - name: INGRESS_NAME
-            value: "argocd"
+  source:
+    chart: argo-cd
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 5.51.0
 
-          - name: INGRESS_NAMESPACE
-            value: "argocd"
+    # https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+    helm:
+      valuesObject:
+        fullnameOverride: argocd
+        applicationSet:
+          enabled: false
+        notifications:
+          enabled: false
+        configs:
+          secret:
+            createSecret: false
+          cm:
+            url:  argo${ARGOCD_ENV_DNS}.cloud-diplomats.com
+            exec.enabled: "true"
+            kustomize.buildOptions: "--load-restrictor LoadRestrictionsNone"
 
-          - name: INGRESS_IP_NAME
-            value: "service-dev-k8s-dev-ingress-argo"
+            # dex.config: |
+            #   connectors:
+            #     - id: google
+            #       name: Google
+            #       type: oidc
+            #       config:
+            #         issuer: https://accounts.google.com
+            #         clientID: $dex.client.id # read from argo-secrets
+            #         clientSecret: $dex.client.secret # read from argo-secrets
+          params:
+            server.insecure: true
+          rbac:
+            policy.default: role:readonly
+          cmp:
+            create: true
+            plugins:
+              envsubst:
+                init:
+                  command: ["sh", "-c"]
+                  args: ["kustomize build . --load-restrictor LoadRestrictionsNone -o raw-kustomization.yaml"]                   
+                generate:
+                  command: ["sh", "-c"]
+                  args: ["envsubst < raw-kustomization.yaml > processed-kustomization.yaml && cp processed-kustomization.yaml /dev/stdout"]
+                discover:
+                  fileName: "kustomization.*"
 
-          - name: INGRESS_DNS
-            value: "argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
-
-          # - name: EXTERNAL_DNS_ANNOTATION
-          #   value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
-
-          - name: SERVICE_NAME
-            value: "argocd-server"
-
-          - name: SERVICE_PORT
-            value: "80"
-  
-    - chart: argo-cd
-      repoURL: https://argoproj.github.io/argo-helm
-      targetRevision: 5.51.0
-
-      # https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
-      helm:
-        valuesObject:
-          fullnameOverride: argocd
-          applicationSet:
-            enabled: false
-          notifications:
-            enabled: false
-          configs:
-            secret:
-              createSecret: false
-            cm:
-              url:  argo${ARGOCD_ENV_DNS}.cloud-diplomats.com
-              exec.enabled: "true"
-              kustomize.buildOptions: "--load-restrictor LoadRestrictionsNone"
-
-              # dex.config: |
-              #   connectors:
-              #     - id: google
-              #       name: Google
-              #       type: oidc
-              #       config:
-              #         issuer: https://accounts.google.com
-              #         clientID: $dex.client.id # read from argo-secrets
-              #         clientSecret: $dex.client.secret # read from argo-secrets
-            params:
-              server.insecure: true
-            rbac:
-              policy.default: role:readonly
-            cmp:
-              create: true
-              plugins:
-                envsubst:
-                  init:
-                    command: ["sh", "-c"]
-                    args: ["kustomize build . --load-restrictor LoadRestrictionsNone -o raw-kustomization.yaml"]                   
-                  generate:
-                    command: ["sh", "-c"]
-                    args: ["envsubst < raw-kustomization.yaml > processed-kustomization.yaml && cp processed-kustomization.yaml /dev/stdout"]
-                  discover:
-                    fileName: "kustomization.*"
-
-          ## Controller ##
-          controller:
-            # resources:
-            #   limits:
-            #     cpu: 1
-            #     memory: 1024Mi
-            #   requests:
-            #     cpu: 500m
-            #     memory: 1024Mi
-            metrics:
-              enabled: true
-              serviceMonitor:
-                enabled: false # true
-                namespace: argocd
-                additionalLabels:
-                  prometheus.io/scrap-with: kube-prometheus-stack
-        
-          ## DEX ##
-          dex:
+        ## Controller ##
+        controller:
+          # resources:
+          #   limits:
+          #     cpu: 1
+          #     memory: 1024Mi
+          #   requests:
+          #     cpu: 500m
+          #     memory: 1024Mi
+          metrics:
             enabled: true
-            metrics:
-              enabled: true
-              serviceMonitor:
-                enabled: false # true
-                namespace: argocd
-                additionalLabels:
-                  prometheus.io/scrap-with: kube-prometheus-stack
+            serviceMonitor:
+              enabled: false # true
+              namespace: argocd
+              additionalLabels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+      
+        ## DEX ##
+        dex:
+          enabled: true
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              namespace: argocd
+              additionalLabels:
+                prometheus.io/scrap-with: kube-prometheus-stack
 
-          ## RepoServer ##
-          repoServer:
-            # resources:
-            #   limits:
-            #     cpu: 500m
-            #     memory: 1.5Gi
-            #   requests:
-            #     cpu: 250m
-            #     memory: 512Mi
+        ## RepoServer ##
+        repoServer:
+          # resources:
+          #   limits:
+          #     cpu: 500m
+          #     memory: 1.5Gi
+          #   requests:
+          #     cpu: 250m
+          #     memory: 512Mi
 
-            volumes:
-              - name: custom-tools
-                emptyDir: {}
-              - name: cmp-plugin
-                configMap:
-                  name: argocd-cmp-cm
+          volumes:
+            - name: custom-tools
+              emptyDir: {}
+            - name: cmp-plugin
+              configMap:
+                name: argocd-cmp-cm
 
-            initContainers:
-              - name: download-tools
-                image: golang:1.21-alpine3.17
-                command: [sh, -c]
-                args:
-                  - apk add git && go install github.com/drone/envsubst/cmd/envsubst@v1.0.3 && mv $GOPATH/bin/envsubst /custom-tools/
-                volumeMounts:
-                  - mountPath: /custom-tools
-                    name: custom-tools
+          initContainers:
+            - name: download-tools
+              image: golang:1.21-alpine3.17
+              command: [sh, -c]
+              args:
+                - apk add git && go install github.com/drone/envsubst/cmd/envsubst@v1.0.3 && mv $GOPATH/bin/envsubst /custom-tools/
+              volumeMounts:
+                - mountPath: /custom-tools
+                  name: custom-tools
 
-            extraContainers:        
-              - name: envsubst
-                command: [/var/run/argocd/argocd-cmp-server]
-                image: quay.io/argoproj/argocd:v2.9.0
-                securityContext:
-                  runAsNonRoot: true
-                  runAsUser: 999
-                volumeMounts:
-                  - mountPath: /var/run/argocd
-                    name: var-files
-                  - mountPath: /home/argocd/cmp-server/plugins
-                    name: plugins
-                  - mountPath: /tmp
-                    name: tmp
+          extraContainers:        
+            - name: envsubst
+              command: [/var/run/argocd/argocd-cmp-server]
+              image: quay.io/argoproj/argocd:v2.9.0
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 999
+              volumeMounts:
+                - mountPath: /var/run/argocd
+                  name: var-files
+                - mountPath: /home/argocd/cmp-server/plugins
+                  name: plugins
+                - mountPath: /tmp
+                  name: tmp
 
-                  # Register plugins into sidecar
-                  - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-                    subPath: envsubst.yaml
-                    name: cmp-plugin
+                # Register plugins into sidecar
+                - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+                  subPath: envsubst.yaml
+                  name: cmp-plugin
 
-                  # Important: Mount tools into $PATH
-                  - name: custom-tools
-                    subPath: envsubst
-                    mountPath: /usr/local/bin/envsubst
+                # Important: Mount tools into $PATH
+                - name: custom-tools
+                  subPath: envsubst
+                  mountPath: /usr/local/bin/envsubst
 
-            metrics:
-              enabled: true
-              serviceMonitor:
-                enabled: false # true
-                namespace: argocd
-                additionalLabels:
-                  prometheus.io/scrap-with: kube-prometheus-stack
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              namespace: argocd
+              additionalLabels:
+                prometheus.io/scrap-with: kube-prometheus-stack
 
-          ## Redis ##
-          redis:
-            # resources:
-            #   limits:
-            #     cpu: 120m
-            #     memory: 256Mi
-            #   requests:
-            #     cpu: 120m
-            #     memory: 256Mi
-            metrics:
-              enabled: true
-              serviceMonitor:
-                enabled: false # true
-                additionalLabels:
-                  prometheus.io/scrap-with: kube-prometheus-stack
-                namespace: argocd
+        ## Redis ##
+        redis:
+          # resources:
+          #   limits:
+          #     cpu: 120m
+          #     memory: 256Mi
+          #   requests:
+          #     cpu: 120m
+          #     memory: 256Mi
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              additionalLabels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+              namespace: argocd
 
-          ## Server ##
-          server:
-            # resources:
-            #   limits:
-            #     cpu: 400m
-            #     memory: 512Mi
-            #   requests:
-            #     cpu: 400m
-            #     memory: 512Mi
+        ## Server ##
+        server:
+          # resources:
+          #   limits:
+          #     cpu: 400m
+          #     memory: 512Mi
+          #   requests:
+          #     cpu: 400m
+          #     memory: 512Mi
 
-            # GKE Ingress
-            service:
-              annotations:
-                cloud.google.com/neg: '{"ingress": true}'
-                cloud.google.com/backend-config: '{"default": "backend-config-argocd"}'
-            metrics:
-              enabled: true
-              serviceMonitor:
-                enabled: false # true
-                additionalLabels:
-                  prometheus.io/scrap-with: kube-prometheus-stack
-                namespace: argocd
+          # GKE Ingress
+          service:
+            annotations:
+              cloud.google.com/neg: '{"ingress": true}'
+              cloud.google.com/backend-config: '{"default": "backend-config-argocd"}'
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              additionalLabels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+              namespace: argocd
 
   destination:
     server: "https://kubernetes.default.svc"
