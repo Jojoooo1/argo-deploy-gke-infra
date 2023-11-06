@@ -140,7 +140,7 @@ spec:
 
             initContainers:
               - name: download-tools
-                image: golang:1.21-alpine
+                image: golang:1.21-alpine3.17
                 command: [sh, -c]
                 args:
                   - apk add git && go install github.com/drone/envsubst/cmd/envsubst@v1.0.3 && mv $GOPATH/bin/envsubst /custom-tools/
@@ -151,7 +151,7 @@ spec:
             extraContainers:        
               - name: envsubst
                 command: [/var/run/argocd/argocd-cmp-server]
-                image: quay.io/argoproj/argocd:v2.8.4
+                image: quay.io/argoproj/argocd:v2.9.0
                 securityContext:
                   runAsNonRoot: true
                   runAsUser: 999
