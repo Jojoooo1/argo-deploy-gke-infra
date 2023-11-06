@@ -33,13 +33,13 @@ spec:
             value: "argocd"
 
           - name: INGRESS_IP_NAME
-            value: "cl-dpl-service-test-rap0-k8s-test-ingress-argo"
+            value: "service-dev-k8s-dev-ingress-argo"
 
           - name: INGRESS_DNS
             value: "argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
-          - name: EXTERNAL_DNS_ANNOTATION
-            value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
+          # - name: EXTERNAL_DNS_ANNOTATION
+          #   value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
           - name: SERVICE_NAME
             value: "argocd-server"
