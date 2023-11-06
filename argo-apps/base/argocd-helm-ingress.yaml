@@ -33,7 +33,7 @@ spec:
           value: "argocd"
 
         - name: INGRESS_IP_NAME
-          value: "service-dev-k8s-dev-ingress-argo"
+          value: "${ARGOCD_ENV_PROJECT}-k8s-ingress-argo"
 
         - name: INGRESS_DNS
           value: "argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
