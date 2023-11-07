@@ -1,16 +1,16 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-prod-nginx
+  name: letsencrypt-prod-gce
   namespace: kube-system
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: platform@cloud-diplomats.com
     privateKeySecretRef:
-      name: letsencrypt-prod-nginx
+      name: letsencrypt-prod-gce
 
     solvers:
       - http01:
           ingress:
-            class: nginx
+            class: gce
