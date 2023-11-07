@@ -32,10 +32,10 @@ spec:
             value: "${ARGOCD_ENV_PROJECT}-k8s-ingress-rabbitmq"
 
           - name: INGRESS_DNS
-            value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomats.com"
+            value: "rabbitmq${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}.com"
 
           - name: EXTERNAL_DNS_ANNOTATION
-            value: "external-dns.alpha.kubernetes.io/hostname: rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomats.com"
+            value: "external-dns.alpha.kubernetes.io/hostname: rabbitmq${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}.com"
 
           - name: SERVICE_NAME
             value: "rabbitmq-headless"

@@ -29,8 +29,11 @@ spec:
         - name: ENV
           value: "${ARGOCD_ENV_ENV}"
 
-        - name: DNS
-          value: "${ARGOCD_ENV_DNS}"
+        - name: DNS_ENV
+          value: "${ARGOCD_ENV_DNS_ENV}"
+
+        - name: DNS_DOMAIN
+          value: "${ARGOCD_ENV_DNS_DOMAIN}"
 
         - name: PROJECT
           value: "${ARGOCD_ENV_PROJECT}"
@@ -40,6 +43,7 @@ spec:
           
         - name: CLUSTER_LOCATION
           value: "${ARGOCD_ENV_CLUSTER_LOCATION}"
+          
 
   destination:
     server: "https://kubernetes.default.svc"

@@ -30,8 +30,8 @@ spec:
         fullnameOverride: external-dns
         
         provider: google
-        domainFilters: ["cloud-diplomats.com"]
-        extraArgs: ["--google-project=commons-dns-5wxf"]
+        domainFilters: ["${ARGOCD_ENV_DNS_DOMAIN}"]
+        extraArgs: ["--google-project=${ARGOCD_ENV_DNS_PROJECT_ID}"]
 
         # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/registry/registry.md
         txtOwnerId: "${ARGOCD_ENV_PROJECT}-k8s-${ARGOCD_ENV_NAME}"
