@@ -47,10 +47,14 @@ spec:
         - name: SERVICE_PORT
           value: "80"
   
-    
-
   destination:
     server: "https://kubernetes.default.svc"
     namespace: argocd
 
-
+  ignoreDifferences:
+    - kind: Secret
+      name: argocd-cert
+      namespace: argocd
+      jsonPointers:
+        - /data/tls.crt
+        - /data/tls.key
