@@ -15,9 +15,9 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 
-    # automated:
-    #   prune: true
-    #   selfHeal: true
+    automated:
+      prune: true
+      selfHeal: true
       
   source:
     chart: argo-cd

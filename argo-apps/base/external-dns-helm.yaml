@@ -31,10 +31,10 @@ spec:
         
         provider: google
         domainFilters: ["cloud-diplomats.com"]
-        extraArgs: ["--google-project=cl-dpl-commons-dns-az9l"]
+        extraArgs: ["--google-project=commons-dns-5wxf"]
 
         # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/registry/registry.md
-        txtOwnerId: "${ARGOCD_ENV_PROJECT}-k8s-test"
+        txtOwnerId: "${ARGOCD_ENV_PROJECT}-k8s-${ARGOCD_ENV_NAME}"
 
         # resources:
         #   requests:

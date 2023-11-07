@@ -35,6 +35,12 @@ spec:
         - name: PROJECT
           value: "${ARGOCD_ENV_PROJECT}"
 
+        - name: CLUSTER
+          value: "${ARGOCD_ENV_CLUSTER}"
+          
+        - name: CLUSTER_LOCATION
+          value: "${ARGOCD_ENV_CLUSTER_LOCATION}"
+
   destination:
     server: "https://kubernetes.default.svc"
     namespace: default

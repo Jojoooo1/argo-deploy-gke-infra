@@ -38,8 +38,8 @@ spec:
         - name: INGRESS_DNS
           value: "argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
-        # - name: EXTERNAL_DNS_ANNOTATION
-        #   value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
+        - name: EXTERNAL_DNS_ANNOTATION
+          value: "external-dns.alpha.kubernetes.io/hostname: argo${ARGOCD_ENV_DNS}.cloud-diplomats.com"
 
         - name: SERVICE_NAME
           value: "argocd-server"

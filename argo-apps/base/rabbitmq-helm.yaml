@@ -29,7 +29,7 @@ spec:
             value: "rabbitmq"
 
           - name: INGRESS_IP_NAME
-            value: "cl-dpl-service-test-rap0-k8s-test-ingress-rabbitmq"
+            value: "${ARGOCD_ENV_PROJECT}-k8s-ingress-rabbitmq"
 
           - name: INGRESS_DNS
             value: "rabbitmq${ARGOCD_ENV_DNS}.cloud-diplomats.com"
