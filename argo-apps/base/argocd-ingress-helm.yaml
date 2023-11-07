@@ -20,7 +20,7 @@ spec:
     #   selfHeal: true
       
   source:
-    repoURL: https://github.com/Jojoooo1/kustomization-gce-iap.git
+    repoURL: https://github.com/Jojoooo1/kustomization-gce-iap-with-cert-manager.git
     targetRevision: main
     path: ./
     plugin:
