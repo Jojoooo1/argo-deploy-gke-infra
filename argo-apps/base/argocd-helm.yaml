@@ -19,7 +19,7 @@ spec:
       prune: true
       selfHeal: true
       
-  source:
+  sources:
     chart: argo-cd
     repoURL: https://argoproj.github.io/argo-helm
     targetRevision: 5.51.0
@@ -183,26 +183,6 @@ spec:
           #   requests:
           #     cpu: 400m
           #     memory: 512Mi
-          initContainers:
-            - name: extension-metrics
-              image: ext-installer:local
-              env:
-                - name: EXTENSION_URL
-                  value: https://github.com/argoproj-labs/argocd-extension-metrics/releases/download/v1.0.0/extension.tar.gz
-                - name: EXTENSION_CHECKSUM_URL
-                  value: https://github.com/argoproj-labs/argocd-extension-metrics/releases/download/v1.0.0/extension_checksums.txt
-              volumeMounts:
-                - name: extensions
-                  mountPath: /tmp/extensions/
-              securityContext:
-                runAsUser: 1000
-                allowPrivilegeEscalation: false
-          volumes:
-            - name: extensions
-              emptyDir: {}
-          volumeMounts:
-            - name: extensions
-              mountPath: /tmp/extensions/
 
           # GKE Ingress
           service:
