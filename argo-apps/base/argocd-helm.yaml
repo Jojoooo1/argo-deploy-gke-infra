@@ -19,7 +19,7 @@ spec:
       prune: true
       selfHeal: true
       
-  sources:
+  source:
     chart: argo-cd
     repoURL: https://argoproj.github.io/argo-helm
     targetRevision: 5.51.0
@@ -120,9 +120,6 @@ spec:
               volumeMounts:
                 - mountPath: /custom-tools
                   name: custom-tools
-              securityContext:
-                runAsUser: 1000
-                allowPrivilegeEscalation: false 
 
           extraContainers:        
             - name: envsubst
