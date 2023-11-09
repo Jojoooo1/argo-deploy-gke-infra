@@ -15,10 +15,6 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 
-    # automated:
-    #   prune: true
-    #   selfHeal: true
-      
   source:
     repoURL: https://github.com/Jojoooo1/kustomization-gce-iap-with-cert-manager.git
     targetRevision: main

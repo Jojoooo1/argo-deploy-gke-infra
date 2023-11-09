@@ -2,7 +2,6 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging-nginx
-  namespace: kube-system
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
