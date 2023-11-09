@@ -49,6 +49,7 @@ spec:
             #         issuer: https://accounts.google.com
             #         clientID: $dex.client.id # read from argo-secrets
             #         clientSecret: $dex.client.secret # read from argo-secrets
+
           params:
             server.insecure: true
           rbac:
@@ -141,7 +142,7 @@ spec:
                   subPath: envsubst.yaml
                   name: cmp-plugin
 
-                # Important: Mount tools into $PATH
+                # Mount tools into $PATH
                 - name: custom-tools
                   subPath: envsubst
                   mountPath: /usr/local/bin/envsubst
