@@ -40,179 +40,179 @@ spec:
           - name: SERVICE_PORT
             value: "80"
 
-    # - chart: keycloak
-    #   repoURL: https://charts.bitnami.com/bitnami
-    #   targetRevision: 17.3.1
+    - chart: keycloak
+      repoURL: https://charts.bitnami.com/bitnami
+      targetRevision: 17.3.1
 
-    #   # https://github.com/bitnami/charts/tree/main/bitnami/keycloak
-    #   helm:
-    #     valuesObject:
-    #       fullnameOverride: keycloak
-    #       ## Resources ##
-    #       # resources:
-    #       #   requests:
-    #       #     cpu: 512m
-    #       #     memory: 3Gi
-    #       #   limits:
-    #       #     # cpu: without limit
-    #       #     memory: 3Gi
+      # https://github.com/bitnami/charts/tree/main/bitnami/keycloak
+      helm:
+        valuesObject:
+          fullnameOverride: keycloak
+          ## Resources ##
+          # resources:
+          #   requests:
+          #     cpu: 512m
+          #     memory: 3Gi
+          #   limits:
+          #     # cpu: without limit
+          #     memory: 3Gi
 
-    #       ## Configuration ##
-    #       extraEnvVars:
-    #         - name: JAVA_OPTS
-    #           # Update default JAVA_OPTS from 22.0.5: https://github.com/keycloak/keycloak/blob/b99eb52cee6b0da081b7a1ba9c562deae55b5da0/quarkus/dist/src/main/content/bin/kc.sh#L90
-    #           # to use MinRAMPercentage/MaxRAMPercentage instead of Xms/Xmx
-    #           value: "-XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=75.0 -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.err.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/urandom -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90"
+          ## Configuration ##
+          extraEnvVars:
+            - name: JAVA_OPTS
+              # Update default JAVA_OPTS from 22.0.5: https://github.com/keycloak/keycloak/blob/b99eb52cee6b0da081b7a1ba9c562deae55b5da0/quarkus/dist/src/main/content/bin/kc.sh#L90
+              # to use MinRAMPercentage/MaxRAMPercentage instead of Xms/Xmx
+              value: "-XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=75.0 -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.err.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/urandom -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90"
           
-    #       ## Mode ##
-    #       production: true
-    #       proxy: edge
+          ## Mode ##
+          production: true
+          proxy: edge
 
-    #       ## Replica ##
-    #       autoscaling:
-    #         enabled: false # true
-    #         minReplicas: 2
-    #         maxReplicas: 3
-    #         targetMemory: "75"
-    #       pdb:
-    #         create: true
+          ## Replica ##
+          autoscaling:
+            enabled: false # true
+            minReplicas: 2
+            maxReplicas: 3
+            targetMemory: "75"
+          pdb:
+            create: true
 
-    #       ## Monitoring ##
-    #       metrics:
-    #         enabled: true
-    #         serviceMonitor:
-    #           enabled: false # true
-    #           namespace: keycloak
-    #           labels:
-    #             prometheus.io/scrap-with: kube-prometheus-stack
-    #           # used for keycloak grafana dashboard.
-    #           relabelings:
-    #             - sourceLabels: [__meta_kubernetes_pod_container_name]
-    #               targetLabel: job
-    #         endpoints:
-    #         - path: /metrics
-    #         - path: /realms/master/metrics
+          ## Monitoring ##
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              namespace: keycloak
+              labels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+              # used for keycloak grafana dashboard.
+              relabelings:
+                - sourceLabels: [__meta_kubernetes_pod_container_name]
+                  targetLabel: job
+            endpoints:
+            - path: /metrics
+            - path: /realms/master/metrics
 
 
-    #       ## Auth ##
-    #       auth:
-    #         adminUser: admin
-    #         existingSecret: keycloak-secrets
-    #       extraEnvVarsSecret: keycloak-secrets
+          ## Auth ##
+          auth:
+            adminUser: admin
+            existingSecret: keycloak-secrets
+          extraEnvVarsSecret: keycloak-secrets
 
-    #       # You can add the pubsub variables here
-    #       extraDeploy:
-    #         - |
-    #           apiVersion: v1
-    #           kind: Secret
-    #           metadata:
-    #             name: keycloak-secrets
-    #             namespace: keycloak
-    #           stringData:
-    #             admin-password: password     
+          # You can add the pubsub variables here
+          extraDeploy:
+            - |
+              apiVersion: v1
+              kind: Secret
+              metadata:
+                name: keycloak-secrets
+                namespace: keycloak
+              stringData:
+                admin-password: password     
 
-    #         - |
-    #           apiVersion: v1
-    #           kind: Service
-    #           metadata:
-    #             name: keycloak-private
-    #             namespace: keycloak
-    #             labels:
-    #               metrics/service: "true" # used to prevent scraping 2 targets (service and headless service, since they have the same labels, can not differentiate)
-    #             annotations:
-    #               cloud.google.com/neg: '{"ingress": true}'
-    #               cloud.google.com/backend-config: '{"default": "backend-config-keycloak"}'
-    #           spec:
-    #             ports:
-    #               - name: http
-    #                 port: 80
-    #                 protocol: TCP
-    #                 targetPort: http
-    #               - name: https
-    #                 port: 443
-    #                 protocol: TCP
-    #                 targetPort: https
-    #             selector:
-    #               app.kubernetes.io/component: keycloak
-    #               app.kubernetes.io/instance: keycloak
-    #               app.kubernetes.io/name: keycloak         
+            - |
+              apiVersion: v1
+              kind: Service
+              metadata:
+                name: keycloak-private
+                namespace: keycloak
+                labels:
+                  metrics/service: "true" # used to prevent scraping 2 targets (service and headless service, since they have the same labels, can not differentiate)
+                annotations:
+                  cloud.google.com/neg: '{"ingress": true}'
+                  cloud.google.com/backend-config: '{"default": "backend-config-keycloak"}'
+              spec:
+                ports:
+                  - name: http
+                    port: 80
+                    protocol: TCP
+                    targetPort: http
+                  - name: https
+                    port: 443
+                    protocol: TCP
+                    targetPort: https
+                selector:
+                  app.kubernetes.io/component: keycloak
+                  app.kubernetes.io/instance: keycloak
+                  app.kubernetes.io/name: keycloak         
 
-    #       ## Database ##
-    #       postgresql:
-    #         commonAnnotations:
-    #           argocd.argoproj.io/sync-wave: "-1"
-    #         auth:
-    #           database: keycloak
-    #           postgresPassword: password
-    #           username: admin
-    #           password: password
+          ## Database ##
+          postgresql:
+            commonAnnotations:
+              argocd.argoproj.io/sync-wave: "-1"
+            auth:
+              database: keycloak
+              postgresPassword: password
+              username: admin
+              password: password
 
-    #       ## Network ##
+          ## Network ##
 
-    #       service: 
-    #         type: ClusterIP
+          service: 
+            type: ClusterIP
           
-    #       ingress:
-    #         enabled: true
-    #         ingressClassName: nginx
-    #         hostname: identity${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}
-    #         tls: true
-    #         annotations:
-    #           cert-manager.io/cluster-issuer: letsencrypt-prod-nginx
-    #           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    #           external-dns.alpha.kubernetes.io/ingress-hostname-source: annotation-only # DO NOT REMOVE TO PREVENT UNWANTED BEHAVIOR
-    #           external-dns.alpha.kubernetes.io/hostname: identity${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            hostname: identity${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}
+            tls: true
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod-nginx
+              nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+              external-dns.alpha.kubernetes.io/ingress-hostname-source: annotation-only # DO NOT REMOVE TO PREVENT UNWANTED BEHAVIOR
+              external-dns.alpha.kubernetes.io/hostname: identity${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}
               
-    #           nginx.ingress.kubernetes.io/proxy-body-size: 25m
-    #           nginx.ingress.kubernetes.io/proxy-buffer-size: "128k" # A common issue with Keycloak and nginx is that the proxy buffer may be too small for what Keycloak is trying to send. This will result in a Bad Gateway (502) error.
-    #           nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
+              nginx.ingress.kubernetes.io/proxy-body-size: 25m
+              nginx.ingress.kubernetes.io/proxy-buffer-size: "128k" # A common issue with Keycloak and nginx is that the proxy buffer may be too small for what Keycloak is trying to send. This will result in a Bad Gateway (502) error.
+              nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
               
-    #           # nginx.ingress.kubernetes.io/server-snippet: |
-    #           #   # Restrict Index
-    #           #   location = "/" {
-    #           #     deny all;
-    #           #     return 404;
-    #           #   }
+              # nginx.ingress.kubernetes.io/server-snippet: |
+              #   # Restrict Index
+              #   location = "/" {
+              #     deny all;
+              #     return 404;
+              #   }
 
-    #           #   # Restrict Metrics API
-    #           #   location /metrics {
-    #           #       return 403;
-    #           #   }
+              #   # Restrict Metrics API
+              #   location /metrics {
+              #       return 403;
+              #   }
 
-    #           #   # Restrict Admin console
-    #           #   location /admin {
-    #           #     deny all;
-    #           #     return 403;
-    #           #   }
+              #   # Restrict Admin console
+              #   location /admin {
+              #     deny all;
+              #     return 403;
+              #   }
 
-    #       ## Plugins ##
-    #       initContainers:
-    #         - name: download-kc-plugins
-    #           image: alpine:3.18.4
-    #           command:
-    #             - sh
-    #           args:
-    #             - -c
-    #             - |
-    #               wget https://github.com/aerogear/keycloak-metrics-spi/releases/download/4.0.0/keycloak-metrics-spi-4.0.0.jar -O /providers/keycloak-metrics-spi.jar
-    #               chmod +x /providers/keycloak-metrics-spi.jar
-    #               touch /providers/keycloak-metrics-spi.jar.dodeploy
+          ## Plugins ##
+          initContainers:
+            - name: download-kc-plugins
+              image: alpine:3.18.4
+              command:
+                - sh
+              args:
+                - -c
+                - |
+                  wget https://github.com/aerogear/keycloak-metrics-spi/releases/download/4.0.0/keycloak-metrics-spi-4.0.0.jar -O /providers/keycloak-metrics-spi.jar
+                  chmod +x /providers/keycloak-metrics-spi.jar
+                  touch /providers/keycloak-metrics-spi.jar.dodeploy
 
-    #               # wget https://github.com/Jojoooo1/keycloak-pubsub-listener/blob/main/release/keycloak-to-pubsub.jar -O /providers/keycloak-to-gcpubsub.jar
-    #               # chmod +x /providers/keycloak-to-gcpubsub.jar
-    #               # touch /providers/keycloak-to-gcpubsub.jar.dodeploy
+                  # wget https://github.com/Jojoooo1/keycloak-pubsub-listener/blob/main/release/keycloak-to-pubsub.jar -O /providers/keycloak-to-gcpubsub.jar
+                  # chmod +x /providers/keycloak-to-gcpubsub.jar
+                  # touch /providers/keycloak-to-gcpubsub.jar.dodeploy
 
-    #           volumeMounts:
-    #             - name: providers
-    #               mountPath: /providers
+              volumeMounts:
+                - name: providers
+                  mountPath: /providers
 
-    #       extraVolumeMounts:
-    #         - name: providers
-    #           mountPath: /opt/bitnami/keycloak/providers
+          extraVolumeMounts:
+            - name: providers
+              mountPath: /opt/bitnami/keycloak/providers
 
-    #       extraVolumes:
-    #         - name: providers
-    #           emptyDir: {}
+          extraVolumes:
+            - name: providers
+              emptyDir: {}
 
   destination:
     server: "https://kubernetes.default.svc"
