@@ -100,7 +100,7 @@ spec:
         ingress:
           enabled: true
           ingressClassName: nginx
-          hostname: identity.${ARGOCD_ENV_DNS_DOMAIN}
+          hostname: identity${ARGOCD_ENV_DNS}.${ARGOCD_ENV_DNS_DOMAIN}
           tls: true
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-prod-nginx
