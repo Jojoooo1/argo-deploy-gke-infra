@@ -89,8 +89,9 @@ spec:
 
         ## Database ##
         postgresql:
-          annotations:
-            argocd.argoproj.io/sync-wave: "-1"
+          global:
+            commonAnnotations:
+              argocd.argoproj.io/sync-wave: "-1"
           auth:
             database: keycloak
             postgresPassword: password
