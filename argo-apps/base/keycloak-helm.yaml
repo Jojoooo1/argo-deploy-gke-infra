@@ -76,6 +76,7 @@ spec:
           existingSecret: keycloak-secrets
         extraEnvVarsSecret: keycloak-secrets
 
+        # You can add the pubsub variables here
         extraDeploy:
           - |
             apiVersion: v1
