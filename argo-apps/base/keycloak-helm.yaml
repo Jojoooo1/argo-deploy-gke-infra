@@ -185,6 +185,12 @@ spec:
                   return 403;
                 }
 
+                # Restrict Admin master access
+                location /realms/master {
+                  deny all;
+                  return 403;
+                }
+
           ## Plugins ##
           initContainers:
             - name: download-kc-plugins
