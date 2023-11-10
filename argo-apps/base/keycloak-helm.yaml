@@ -185,7 +185,7 @@ spec:
                   return 403;
                 }
 
-                # Restrict Any master access
+                # Restrict any master realm access
                 location /realms/master {
                   deny all;
                   return 403;
