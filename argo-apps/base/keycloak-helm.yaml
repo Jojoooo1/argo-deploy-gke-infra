@@ -167,23 +167,23 @@ spec:
               nginx.ingress.kubernetes.io/proxy-buffer-size: "128k" # A common issue with Keycloak and nginx is that the proxy buffer may be too small for what Keycloak is trying to send. This will result in a Bad Gateway (502) error.
               nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
               
-              # nginx.ingress.kubernetes.io/server-snippet: |
-              #   # Restrict Index
-              #   location = "/" {
-              #     deny all;
-              #     return 404;
-              #   }
+              nginx.ingress.kubernetes.io/server-snippet: |
+                # Restrict Index
+                location = "/" {
+                  deny all;
+                  return 404;
+                }
 
-              #   # Restrict Metrics API
-              #   location /metrics {
-              #       return 403;
-              #   }
+                # Restrict Metrics API
+                location /metrics {
+                    return 403;
+                }
 
-              #   # Restrict Admin console
-              #   location /admin {
-              #     deny all;
-              #     return 403;
-              #   }
+                # Restrict Admin console
+                location /admin {
+                  deny all;
+                  return 403;
+                }
 
           ## Plugins ##
           initContainers:
