@@ -148,3 +148,11 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: rabbitmq
+
+  ignoreDifferences:
+    - kind: Secret
+      name: rabbitmq-cert
+      namespace: rabbitmq
+      jsonPointers:
+        - /data/tls.crt
+        - /data/tls.key
