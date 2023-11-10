@@ -217,3 +217,11 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: keycloak
+
+  ignoreDifferences:
+    - kind: Secret
+      name: keycloak-cert
+      namespace: keycloak
+      jsonPointers:
+        - /data/tls.crt
+        - /data/tls.key
