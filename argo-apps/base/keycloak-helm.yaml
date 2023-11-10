@@ -102,10 +102,6 @@ spec:
           ingressClassName: nginx
           hostname: identity.${ARGOCD_ENV_DNS_DOMAIN}
           tls: true
-          extraTls:
-          - secretName: keycloak-tls
-            hosts:
-            - identity.${ARGOCD_ENV_DNS_DOMAIN}
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-prod-nginx
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
