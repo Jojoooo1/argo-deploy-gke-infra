@@ -134,7 +134,7 @@ spec:
                     targetPort: https
                 selector:
                   app.kubernetes.io/component: keycloak
-                  app.kubernetes.io/instance: keycloak
+                  app.kubernetes.io/instance: keycloak-helm
                   app.kubernetes.io/name: keycloak         
 
           ## Database ##
