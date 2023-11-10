@@ -16,7 +16,7 @@ spec:
       - PrunePropagationPolicy=foreground
 
   sources:
-    - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap.git
+    - repoURL: https://github.com/Jojoooo1/kustomization-gce-iap-with-cert-manager.git
       targetRevision: main
       path: ./
       plugin:
@@ -33,9 +33,6 @@ spec:
 
           - name: INGRESS_DNS
             value: "rabbitmq${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}"
-
-          - name: EXTERNAL_DNS_ANNOTATION
-            value: "external-dns.alpha.kubernetes.io/hostname: rabbitmq${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}"
 
           - name: SERVICE_NAME
             value: "rabbitmq-headless"
