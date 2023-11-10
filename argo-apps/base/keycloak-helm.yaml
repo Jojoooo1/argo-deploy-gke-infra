@@ -107,25 +107,32 @@ spec:
             hosts:
             - identity.${ARGOCD_ENV_DNS_DOMAIN}
           annotations:
-            nginx.ingress.kubernetes.io/proxy-buffer-size: "128k" # A common issue with Keycloak and nginx is that the proxy buffer may be too small for what Keycloak is trying to send. This will result in a Bad Gateway (502) error.
+            cert-manager.io/cluster-issuer: letsencrypt-prod-nginx
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-            nginx.ingress.kubernetes.io/server-snippet: |
-              # Restrict Index
-              location = "/" {
-                deny all;
-                return 404;
-              }
+            external-dns.alpha.kubernetes.io/ingress-hostname-source: annotation-only # DO NOT REMOVE TO PREVENT UNWANTED BEHAVIOR
+            external-dns.alpha.kubernetes.io/hostname: identity${ARGOCD_ENV_DNS_ENV}.${ARGOCD_ENV_DNS_DOMAIN}
+            
+            nginx.ingress.kubernetes.io/proxy-body-size: 25m
+            nginx.ingress.kubernetes.io/proxy-buffer-size: "128k" # A common issue with Keycloak and nginx is that the proxy buffer may be too small for what Keycloak is trying to send. This will result in a Bad Gateway (502) error.
+            nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
+            
+            # nginx.ingress.kubernetes.io/server-snippet: |
+            #   # Restrict Index
+            #   location = "/" {
+            #     deny all;
+            #     return 404;
+            #   }
 
-              # Restrict Metrics API
-              location /metrics {
-                  return 403;
-              }
+            #   # Restrict Metrics API
+            #   location /metrics {
+            #       return 403;
+            #   }
 
-              # Restrict Admin console
-              location /admin {
-                deny all;
-                return 403;
-              }
+            #   # Restrict Admin console
+            #   location /admin {
+            #     deny all;
+            #     return 403;
+            #   }
 
         ## Plugins ##
         initContainers:
@@ -139,6 +146,12 @@ spec:
                 wget https://github.com/aerogear/keycloak-metrics-spi/releases/download/4.0.0/keycloak-metrics-spi-4.0.0.jar -O /providers/keycloak-metrics-spi.jar
                 chmod +x /providers/keycloak-metrics-spi.jar
                 touch /providers/keycloak-metrics-spi.jar.dodeploy
+
+                # wget https://github.com/Jojoooo1/keycloak-pubsub-listener/blob/main/release/keycloak-to-pubsub.jar -O /providers/keycloak-to-gcpubsub.jar
+                # chmod +x /providers/keycloak-to-gcpubsub.jar
+                # touch /providers/keycloak-to-gcpubsub.jar.dodeploy
+
+
 
             volumeMounts:
               - name: providers
