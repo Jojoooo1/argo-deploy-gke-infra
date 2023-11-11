@@ -48,6 +48,7 @@ spec:
       helm:
         valuesObject:
           fullnameOverride: rabbitmq
+          ## Resources ##
           # resources:
           #   requests: 
           #     memory: 1Gi
@@ -55,22 +56,25 @@ spec:
           #   limits:
           #     memory: 1Gi
 
-          replicaCount: 1 # 3
+          ## Replica ##
+          replicaCount: 1 # For production set to at least 3
           pdb:
             create: "true"
             minAvailable: 1
-
           clustering:
             rebalance: "true"
 
+          ## Persistence ##
           persistence:
-            # storageClass: standard-rwo # SSD
+            # storageClass: standard-rwo # If you want to use SSD
             size: 10Gi
           
+          ## Auth ##
           auth:
-            existingPasswordSecret: rabbitmq-secrets # rabbitmq-password
-            existingErlangSecret: rabbitmq-secrets # rabbitmq-erlang-cookie
+            existingPasswordSecret: rabbitmq-secrets # data.rabbitmq-password
+            existingErlangSecret: rabbitmq-secrets # data.rabbitmq-erlang-cookie
 
+          ## Configurations ##
           communityPlugins: https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/v3.12.0/rabbitmq_delayed_message_exchange-3.12.0.ez
           extraPlugins: rabbitmq_delayed_message_exchange rabbitmq_shovel rabbitmq_shovel_management
           loadDefinition: 
@@ -78,28 +82,9 @@ spec:
             existingSecret: rabbitmq-load-definition
           
           extraConfiguration: |
-            # Warning: recommended th at the RabbitMQ node is allocated AT LEAST 3 times the memory of the default WAL file size limit.
-            raft.wal_max_size_bytes = 64000000 # Flush current WAL file to a segment file on disk once it reaches 64 MiB in size
+            # Recommend that the RabbitMQ node is allocated at least 3 times the memory of the default WAL file size limit
+            raft.wal_max_size_bytes = 256000000 # Flush current WAL file to a segment file on disk once it reaches 256 MiB in size
             load_definitions = /app/load_definition.json
-          
-          service: 
-            headless:
-              annotations:
-                cloud.google.com/neg: '{"ingress": true}'
-                cloud.google.com/backend-config: '{"default": "backend-config-rabbitmq"}'
-
-          metrics:
-            enabled: true
-            serviceMonitor:
-              enabled: false # true
-              namespace: rabbitmq
-              labels:
-                prometheus.io/scrap-with: kube-prometheus-stack
-            prometheusRule:
-              enabled: false # true
-              namespace: rabbitmq
-              labels:
-                prometheus.io/scrap-with: kube-prometheus-stack
           
           extraDeploy:
             - |
@@ -120,7 +105,30 @@ spec:
               data:
                 rabbitmq-password: cGFzc3dvcmQ=
                 rabbitmq-erlang-cookie: SUhCVlhUSUZKSklBWFBJRVVCVkQ=
-                
+          
+          ## Networking ##
+          service: 
+            headless:
+              annotations:
+                cloud.google.com/neg: '{"ingress": true}'
+                cloud.google.com/backend-config: '{"default": "backend-config-rabbitmq"}'
+
+          ## Monitoring ##
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: false # true
+              namespace: rabbitmq
+              labels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+            prometheusRule:
+              enabled: false # true
+              namespace: rabbitmq
+              labels:
+                prometheus.io/scrap-with: kube-prometheus-stack
+          
+
+          ## Health check ##
           customLivenessProbe:
             exec:
               command:
