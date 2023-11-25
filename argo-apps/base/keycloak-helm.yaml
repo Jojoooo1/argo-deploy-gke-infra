@@ -176,6 +176,7 @@ spec:
 
                 # Restrict Metrics API
                 location /metrics {
+                    deny all;
                     return 403;
                 }
 
