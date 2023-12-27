@@ -1,3 +1,5 @@
+# Separate app for argocd ingress, because we need to use envsubst plugin to replace variables in the ingress yaml file.
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
