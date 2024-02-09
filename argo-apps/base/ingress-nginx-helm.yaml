@@ -15,9 +15,9 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
 
-    automated:
-      prune: true
-      selfHeal: true
+    # automated:
+    #   prune: true
+    #   selfHeal: true
 
   source:
     chart: ingress-nginx
@@ -29,13 +29,14 @@ spec:
       valuesObject:
         fullnameOverride: ingress-nginx
         controller:
+          allowSnippetAnnotations: true
           service:
             # loadBalancerIP: # Set in overlay
             externalTrafficPolicy: Local # Used to allow whitelist by IP
-
             # https://cloud.google.com/load-balancing/docs/passthrough-network-load-balancer#backend_service-based_load_balancers
             annotations:
               cloud.google.com/l4-rbs: "enabled"
+
 
           ## Resources ##
           # resources:
@@ -49,10 +50,10 @@ spec:
           ## Replica ##
           autoscaling:
             enabled: false # true
-            minReplicas: 1
+            minReplicas: 2
             maxReplicas: 6
-            targetCPUUtilizationPercentage: 80
-            targetMemoryUtilizationPercentage: 80
+            targetCPUUtilizationPercentage: 75
+            targetMemoryUtilizationPercentage: 75
           
           ## Monitoring ##
           metrics:
